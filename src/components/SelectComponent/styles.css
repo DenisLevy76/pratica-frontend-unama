@@ -1,0 +1,14 @@
+.select-component__container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+select {
+  color: white;
+  background: var(--primary);
+  border: 1px solid var(--secondary);
+  font-size: 1rem;
+  padding: 0.875rem;
+  border-radius: 8px;
+}

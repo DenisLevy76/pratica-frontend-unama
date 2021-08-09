@@ -1,7 +1,5 @@
 import React from 'react';
-import SignupForm from '../../components/SignupForm';
-
-// import { Container } from './styles';
+import SignupForm from '../../components/SignupFormComponent';
 
 const HomePage: React.FC = () => {
   return <SignupForm />;

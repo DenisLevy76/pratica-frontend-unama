@@ -1,6 +1,8 @@
 import Cleave from 'cleave.js/react';
 import { Props } from 'cleave.js/react/props';
 import { ReactNode } from 'react';
+import HelperText from '../HelperTextComponent';
+import LabelInputComponent from '../LabelInputComponent';
 import './styles.css';
 
 interface InputProps extends Props {
@@ -23,10 +25,12 @@ const Input: React.FC<InputProps> = ({
   return (
     <div className="input-container">
       {label ? (
-        <label htmlFor={id} className="input__label">
-          {label}
-          {others.required && ' *'}
-        </label>
+        <LabelInputComponent
+          htmlFor={id}
+          label={label}
+          error={error}
+          required={others.required}
+        />
       ) : (
         ''
       )}
@@ -36,7 +40,7 @@ const Input: React.FC<InputProps> = ({
         className={`form-field ${error && 'error'}`}
         {...others}
       />
-      {error ? <p className="helper-text">{helperText}</p> : ''}
+      {error ? <HelperText helperText={helperText} /> : ''}
     </div>
   );
 };

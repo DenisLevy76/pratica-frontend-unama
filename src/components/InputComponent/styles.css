@@ -11,18 +11,18 @@
 
 .form-field {
   border: 1px solid var(--secondary);
+  border-radius: 8px;
+
   background-color: transparent;
+
   width: 100%;
-  font-size: 1rem;
   padding: 0.875rem;
+
+  font-size: 1rem;
+
   color: var(--text);
 }
 
 .error {
   border-color: var(--error);
-}
-
-.helper-text {
-  color: var(--error);
-  font-size: 0.875rem;
 }
