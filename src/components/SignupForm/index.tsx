@@ -17,8 +17,29 @@ export default function SignupForm() {
 
   return (
     <Form ref={formRef} onSubmit={handleSubmit}>
-      <Input name="name" options={{}} />
-      <Input name="email" options={{}} />
+      <Input
+        name="name"
+        id="name"
+        label="Nome"
+        required
+        options={{
+          numericOnly: true,
+          delimiters: ['.', '.', '-'],
+          blocks: [3, 3, 3, 2],
+        }}
+      />
+      <Input
+        name="cpf"
+        id="cpf"
+        label="CPF"
+        error
+        helperText="error pra cacete"
+        options={{
+          numericOnly: true,
+          delimiters: ['.', '.', '-'],
+          blocks: [3, 3, 3, 2],
+        }}
+      />
     </Form>
   );
 }

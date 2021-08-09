@@ -1,25 +1,43 @@
 import Cleave from 'cleave.js/react';
 import { Props } from 'cleave.js/react/props';
-import { ChangeEvent, useState } from 'react';
+import { ReactNode } from 'react';
+import './styles.css';
 
 interface InputProps extends Props {
   name: string;
+  id: string;
+  label: string;
+  error?: boolean;
+  helperText?: ReactNode;
 }
 
-const Input: React.FC<InputProps> = ({ name, options }) => {
-  const [creditCardNo, setCreditCardNo] = useState('');
-
-  function onCreditCardChange(e: ChangeEvent<HTMLInputElement>) {
-    setCreditCardNo(e.target.value);
-  }
-
+const Input: React.FC<InputProps> = ({
+  name,
+  options,
+  id,
+  label,
+  error,
+  helperText,
+  ...others
+}) => {
   return (
-    <Cleave
-      placeholder="Enter credit card number"
-      options={options}
-      onChange={(e) => onCreditCardChange(e)}
-      className="form-field"
-    />
+    <div className="input-container">
+      {label ? (
+        <label htmlFor={id} className="input__label">
+          {label}
+          {others.required && ' *'}
+        </label>
+      ) : (
+        ''
+      )}
+      <Cleave
+        id={id}
+        options={options}
+        className={`form-field ${error && 'error'}`}
+        {...others}
+      />
+      {error ? <p className="helper-text">{helperText}</p> : ''}
+    </div>
   );
 };
 

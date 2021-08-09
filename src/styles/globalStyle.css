@@ -1,0 +1,14 @@
+/* Variables */
+
+:root {
+  --primary: #424242;
+  --secondary: #878787;
+  --text: #fefefe;
+  --error: #ff4026;
+}
+
+body {
+  background-color: var(--primary);
+  width: 100vw;
+  height: 100vh;
+}

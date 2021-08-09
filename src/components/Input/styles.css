@@ -1,0 +1,28 @@
+.input-container {
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.3rem;
+}
+
+.input__label {
+  font-weight: bold;
+}
+
+.form-field {
+  border: 1px solid var(--secondary);
+  background-color: transparent;
+  width: 100%;
+  font-size: 1rem;
+  padding: 0.875rem;
+  color: var(--text);
+}
+
+.error {
+  border-color: var(--error);
+}
+
+.helper-text {
+  color: var(--error);
+  font-size: 0.875rem;
+}

@@ -1,7 +1,7 @@
-import SignupForm from './components/SignupForm';
+import HomePage from './pages/HomePage';
 
 function App() {
-  return <SignupForm />;
+  return <HomePage />;
 }
 
 export default App;
