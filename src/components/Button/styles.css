@@ -1,0 +1,21 @@
+.btn {
+  background-color: var(--primary);
+
+  border: 1px solid var(--secondary);
+  border-radius: 8px;
+
+  color: var(--text);
+  font-weight: bold;
+
+  padding: 1rem;
+
+  cursor: pointer;
+}
+
+.btn:hover {
+  filter: brightness(0.9);
+}
+
+.btn:active {
+  transform: scale(0.95);
+}

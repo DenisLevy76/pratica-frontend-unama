@@ -1,0 +1,35 @@
+.radio-input__container {
+  display: flex;
+
+  align-items: center;
+
+  gap: 0.3rem;
+}
+
+.radio-input {
+  appearance: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 100%;
+  border: 2px solid var(--secondary);
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.radio-input:checked:before {
+  content: '';
+  position: absolute;
+  background-color: var(--secondary);
+  width: 60%;
+  height: 60%;
+  border-radius: 100%;
+}
+
+.radio-input__label:hover,
+.radio-input:hover,
+.radio-input__container:hover {
+  cursor: pointer;
+}

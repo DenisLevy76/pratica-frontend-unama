@@ -10,6 +10,8 @@ import './styles.css';
 
 interface option extends OptionHTMLAttributes<HTMLOptionElement> {
   id: any;
+  value: string | number | readonly string[] | undefined;
+  children: ReactNode;
 }
 
 interface SelectComponentProps extends SelectHTMLAttributes<HTMLSelectElement> {

@@ -3,10 +3,7 @@
   flex-direction: column;
 
   gap: 0.3rem;
-}
-
-.input__label {
-  font-weight: bold;
+  width: 100%;
 }
 
 .form-field {

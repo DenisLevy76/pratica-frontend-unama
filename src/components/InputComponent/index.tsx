@@ -40,7 +40,7 @@ const Input: React.FC<InputProps> = ({
         className={`form-field ${error && 'error'}`}
         {...others}
       />
-      {error ? <HelperText helperText={helperText} /> : ''}
+      {error && helperText ? <HelperText helperText={helperText} /> : ''}
     </div>
   );
 };
