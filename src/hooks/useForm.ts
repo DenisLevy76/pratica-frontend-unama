@@ -1,5 +1,5 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
-import { validator } from '../utils/Validators';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { validator } from '../utils/validatorsUtils';
 
 const initialState = {
   email: '',
@@ -34,12 +34,17 @@ interface useFormData {
   formData: InitialState;
   formErros: FieldErros;
   handleInputOnChange: (e: ChangeEvent<any>) => void;
+  setFormData: (value: InitialState) => void;
   handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
 }
 
 export default function useForm(): useFormData {
   const [formData, setFormData] = useState<InitialState>(initialState);
   const [formErros, setFormErros] = useState<FieldErros>(initialErros);
+
+  useEffect(() => {
+    console.log(formData, formErros);
+  }, [formData, formErros]);
 
   function handleInputOnChange(e: ChangeEvent<any>) {
     const target = e.target;
@@ -61,6 +66,7 @@ export default function useForm(): useFormData {
     formData,
     formErros,
     handleInputOnChange,
+    setFormData,
     handleSubmit,
   };
 }

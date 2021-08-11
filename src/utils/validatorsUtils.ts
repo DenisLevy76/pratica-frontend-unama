@@ -115,7 +115,9 @@ export function validator(state: InitialState): FieldErros {
   };
 
   erros.email = emailValidator(state.email);
-  erros.emailConfirm = emailValidator(state.emailConfirm);
+  erros.emailConfirm =
+    emailValidator(state.emailConfirm) ||
+    emailComparation(state.email, state.emailConfirm);
   erros.fistName = fistNameValidator(state.fistName);
   erros.lastName = fistNameValidator(state.lastName);
   erros.cpf = cpfValidator(state.cpf);

@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent } from 'react';
 import InputComponent from '../InputComponent';
 import { ptBR, Settings } from '../../settings/ptBR';
 import SelectComponent from '../SelectComponent';
@@ -7,38 +7,19 @@ import RadioGroup from '../RadioGroup';
 import RadioInputComponent from '../RadioInputComponent';
 import Button from '../Button';
 import './styles.css';
-// import useForm from '../../hooks/useForm';
+import useForm from '../../hooks/useForm';
+import MaskInputComponent from '../MaskInputComponent';
 
 let language: Settings = ptBR;
 
-const initialState = {
-  email: '',
-  fistName: '',
-  lastName: '',
-  cpf: '',
-  phone: {
-    number: '',
-    type: 'smartphone',
-  },
-  gender: '',
-  birthdate: '',
-};
-
 export default function SignupForm() {
-  const [formData, setFormData] = useState(initialState);
-  // const { formData, formErros, handleInputOnChange, handleSubmit } = useForm();
-
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
-
-  const [emailConfirm, setEmailConfirm] = useState<string>('');
-
-  function handleInputOnChange(e: ChangeEvent<any>) {
-    const { name, value } = e.target;
-    console.log('eventname: ', name, 'value:', value);
-    setFormData({ ...formData, [name]: value });
-  }
+  const {
+    formData,
+    formErros,
+    handleInputOnChange,
+    handleSubmit,
+    setFormData,
+  } = useForm();
 
   function handleSetPhoneTypeSelection(
     event: ChangeEvent<HTMLSelectElement>
@@ -53,10 +34,7 @@ export default function SignupForm() {
   return (
     <form
       name="form1"
-      onSubmit={(e) => {
-        e.preventDefault();
-        console.log(formData);
-      }}
+      onSubmit={handleSubmit}
       className="signup-form__container"
     >
       <InputComponent
@@ -65,53 +43,54 @@ export default function SignupForm() {
         name="email"
         value={formData.email}
         onChange={handleInputOnChange}
+        error={!!formErros.email}
+        helperText={formErros.email}
         label={language.labels.email}
         placeholder={language.placeholders.email}
-        required
-        options={{}}
       />
       <InputComponent
         id="emailConfirm"
         type="email"
         name="emailConfirm"
-        value={emailConfirm}
-        onChange={(e) => setEmailConfirm(e.target.value)}
+        value={formData.emailConfirm}
+        error={!!formErros.emailConfirm}
+        helperText={formErros.emailConfirm}
+        onChange={handleInputOnChange}
         label={language.labels.emailConfirm}
         placeholder={language.placeholders.emailConfirm}
-        required
-        options={{}}
       />
       <InputComponent
         id="firstName"
         type="text"
         name="firstName"
         value={formData.fistName}
-        onChange={(e) => setFormData({ ...formData, fistName: e.target.value })}
+        error={!!formErros.fistName}
+        helperText={formErros.fistName}
+        onChange={handleInputOnChange}
         label={language.labels.firstName}
         placeholder={language.placeholders.firstName}
-        required
-        options={{}}
       />
       <InputComponent
         id="lastName"
         type="text"
         name="lastName"
         value={formData.lastName}
-        onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+        error={!!formErros.lastName}
+        helperText={formErros.lastName}
+        onChange={handleInputOnChange}
         label={language.labels.lastName}
         placeholder={language.placeholders.lastName}
-        required
-        options={{}}
       />
-      <InputComponent
+      <MaskInputComponent
         id="cpf"
         type="text"
         name="cpf"
         value={formData.cpf}
-        onChange={(e) => setFormData({ ...formData, cpf: e.target.value })}
+        error={!!formErros.cpf}
+        helperText={formErros.cpf}
+        onChange={handleInputOnChange}
         label={language.labels.cpf}
         placeholder={language.placeholders.cpf}
-        required
         options={maskApply(MaskTypes.cpf)}
       />
       <fieldset className="phone__container">
@@ -126,7 +105,7 @@ export default function SignupForm() {
             { id: 2, value: 'telephone', children: 'Fixo' },
           ]}
         />
-        <InputComponent
+        <MaskInputComponent
           id="smartphoneNumber"
           type="text"
           name="phoneNumber"
@@ -139,11 +118,10 @@ export default function SignupForm() {
           }
           label={language.labels.phone.smartphone}
           placeholder={language.placeholders.phone.smartphone}
-          required
           options={maskApply(MaskTypes.smartphoneNumber)}
           className={formData.phone.type === 'smartphone' ? '' : 'display-none'}
         />
-        <InputComponent
+        <MaskInputComponent
           id="phoneNumber"
           type="text"
           name="phoneNumber2"
@@ -156,7 +134,6 @@ export default function SignupForm() {
           }
           label={language.labels.phone.telephone}
           placeholder={language.placeholders.phone.telephone}
-          required
           options={maskApply(MaskTypes.phoneNumber)}
           className={formData.phone.type === 'telephone' ? '' : 'display-none'}
         />
@@ -168,12 +145,7 @@ export default function SignupForm() {
             label="Feminino"
             name="gender"
             value="f"
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                gender: e.target.value,
-              })
-            }
+            onChange={handleInputOnChange}
             defaultChecked
           />
           <RadioInputComponent
@@ -181,37 +153,26 @@ export default function SignupForm() {
             label="Masculino"
             name="gender"
             value="m"
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                gender: e.target.value,
-              })
-            }
+            onChange={handleInputOnChange}
           />
           <RadioInputComponent
             id="genderOthers"
             label="Outros"
             name="gender"
             value="o"
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                gender: e.target.value,
-              })
-            }
+            onChange={handleInputOnChange}
           />
         </RadioGroup>
-        <InputComponent
+        <MaskInputComponent
           id="birthdate"
           type="text"
           name="birthdate"
           value={formData.birthdate}
-          onChange={(e) =>
-            setFormData({ ...formData, birthdate: e.target.value })
-          }
+          error={!!formErros.birthdate}
+          helperText={formErros.birthdate}
+          onChange={handleInputOnChange}
           label={language.labels.birthdate}
           placeholder={language.placeholders.birthdate}
-          required
           options={maskApply(MaskTypes.date)}
         />
       </fieldset>
