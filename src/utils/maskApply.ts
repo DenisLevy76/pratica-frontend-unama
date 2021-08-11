@@ -7,7 +7,7 @@ export enum MaskTypes {
   date = 'DATE',
 }
 
-export function maskApply(mask: any): CleaveOptions {
+export function maskApply(mask: MaskTypes): CleaveOptions {
   switch (mask) {
     case MaskTypes.phoneNumber:
       return {

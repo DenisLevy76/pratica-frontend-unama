@@ -1,6 +1,4 @@
-import React, { ChangeEvent, useRef, useState } from 'react';
-import { SubmitHandler, FormHandles } from '@unform/core';
-import { Form } from '@unform/web';
+import { ChangeEvent, useEffect, useState } from 'react';
 import InputComponent from '../InputComponent';
 import { ptBR, Settings } from '../../settings/ptBR';
 import SelectComponent from '../SelectComponent';
@@ -9,40 +7,64 @@ import RadioGroup from '../RadioGroup';
 import RadioInputComponent from '../RadioInputComponent';
 import Button from '../Button';
 import './styles.css';
+// import useForm from '../../hooks/useForm';
 
 let language: Settings = ptBR;
 
-interface FormData {
-  name: string;
-  email: string;
-}
+const initialState = {
+  email: '',
+  fistName: '',
+  lastName: '',
+  cpf: '',
+  phone: {
+    number: '',
+    type: 'smartphone',
+  },
+  gender: '',
+  birthdate: '',
+};
 
 export default function SignupForm() {
-  const formRef = useRef<FormHandles>(null);
+  const [formData, setFormData] = useState(initialState);
+  // const { formData, formErros, handleInputOnChange, handleSubmit } = useForm();
 
-  const [phoneType, setPhoneType] = useState<string>('smartphone');
+  useEffect(() => {
+    console.log(formData);
+  }, [formData]);
 
-  const handleSubmit: SubmitHandler<FormData> = (data) => {
-    console.log(data);
-  };
+  const [emailConfirm, setEmailConfirm] = useState<string>('');
+
+  function handleInputOnChange(e: ChangeEvent<any>) {
+    const { name, value } = e.target;
+    console.log('eventname: ', name, 'value:', value);
+    setFormData({ ...formData, [name]: value });
+  }
 
   function handleSetPhoneTypeSelection(
     event: ChangeEvent<HTMLSelectElement>
   ): void {
     const value = event.target.value;
-    setPhoneType(value);
+    setFormData({
+      ...formData,
+      phone: { ...formData.phone, type: value, number: '' },
+    });
   }
 
   return (
-    <Form
-      ref={formRef}
-      onSubmit={handleSubmit}
+    <form
+      name="form1"
+      onSubmit={(e) => {
+        e.preventDefault();
+        console.log(formData);
+      }}
       className="signup-form__container"
     >
       <InputComponent
         id="email"
         type="email"
         name="email"
+        value={formData.email}
+        onChange={handleInputOnChange}
         label={language.labels.email}
         placeholder={language.placeholders.email}
         required
@@ -52,6 +74,8 @@ export default function SignupForm() {
         id="emailConfirm"
         type="email"
         name="emailConfirm"
+        value={emailConfirm}
+        onChange={(e) => setEmailConfirm(e.target.value)}
         label={language.labels.emailConfirm}
         placeholder={language.placeholders.emailConfirm}
         required
@@ -61,6 +85,8 @@ export default function SignupForm() {
         id="firstName"
         type="text"
         name="firstName"
+        value={formData.fistName}
+        onChange={(e) => setFormData({ ...formData, fistName: e.target.value })}
         label={language.labels.firstName}
         placeholder={language.placeholders.firstName}
         required
@@ -70,8 +96,8 @@ export default function SignupForm() {
         id="lastName"
         type="text"
         name="lastName"
-        error
-        helperText="aaaaaaaaaaa"
+        value={formData.lastName}
+        onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
         label={language.labels.lastName}
         placeholder={language.placeholders.lastName}
         required
@@ -81,16 +107,18 @@ export default function SignupForm() {
         id="cpf"
         type="text"
         name="cpf"
+        value={formData.cpf}
+        onChange={(e) => setFormData({ ...formData, cpf: e.target.value })}
         label={language.labels.cpf}
         placeholder={language.placeholders.cpf}
         required
         options={maskApply(MaskTypes.cpf)}
       />
-      <div className="phone__container">
+      <fieldset className="phone__container">
         <SelectComponent
           id="phoneType"
-          name="phone.type"
-          value={phoneType}
+          name="phoneType"
+          value={formData.phone.type}
           label={language.labels.phone.type}
           onChange={handleSetPhoneTypeSelection}
           options={[
@@ -99,53 +127,96 @@ export default function SignupForm() {
           ]}
         />
         <InputComponent
+          id="smartphoneNumber"
+          type="text"
+          name="phoneNumber"
+          value={formData.phone.number}
+          onChange={(e) =>
+            setFormData({
+              ...formData,
+              phone: { ...formData.phone, number: e.target.value },
+            })
+          }
+          label={language.labels.phone.smartphone}
+          placeholder={language.placeholders.phone.smartphone}
+          required
+          options={maskApply(MaskTypes.smartphoneNumber)}
+          className={formData.phone.type === 'smartphone' ? '' : 'display-none'}
+        />
+        <InputComponent
           id="phoneNumber"
           type="text"
-          name="phone.number"
-          style={{ width: '100%' }}
-          label={language.labels.phone.number}
-          placeholder={language.placeholders.phone.number}
-          required
-          options={
-            phoneType === 'telephone'
-              ? maskApply(MaskTypes.phoneNumber)
-              : maskApply(MaskTypes.smartphoneNumber)
+          name="phoneNumber2"
+          value={formData.phone.number}
+          onChange={(e) =>
+            setFormData({
+              ...formData,
+              phone: { ...formData.phone, number: e.target.value },
+            })
           }
+          label={language.labels.phone.telephone}
+          placeholder={language.placeholders.phone.telephone}
+          required
+          options={maskApply(MaskTypes.phoneNumber)}
+          className={formData.phone.type === 'telephone' ? '' : 'display-none'}
         />
-      </div>
-      <div className="gender-birthdate__container">
+      </fieldset>
+      <fieldset className="gender-birthdate__container">
         <RadioGroup label={language.labels.gender}>
           <RadioInputComponent
             id="genderFelame"
             label="Feminino"
             name="gender"
             value="f"
-            checked
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                gender: e.target.value,
+              })
+            }
+            defaultChecked
           />
           <RadioInputComponent
             id="genderMale"
             label="Masculino"
             name="gender"
             value="m"
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                gender: e.target.value,
+              })
+            }
           />
           <RadioInputComponent
             id="genderOthers"
             label="Outros"
             name="gender"
             value="o"
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                gender: e.target.value,
+              })
+            }
           />
         </RadioGroup>
         <InputComponent
           id="birthdate"
           type="text"
           name="birthdate"
+          value={formData.birthdate}
+          onChange={(e) =>
+            setFormData({ ...formData, birthdate: e.target.value })
+          }
           label={language.labels.birthdate}
           placeholder={language.placeholders.birthdate}
           required
           options={maskApply(MaskTypes.date)}
         />
-      </div>
+      </fieldset>
+
       <Button>Concluir</Button>
-    </Form>
+    </form>
   );
 }

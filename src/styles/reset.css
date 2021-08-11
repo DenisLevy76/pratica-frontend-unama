@@ -24,6 +24,8 @@ body {
   line-height: 1;
   font-family: Roboto, sans-serif;
   color: var(--text);
+
+  overflow-x: hidden;
 }
 ol,
 ul {

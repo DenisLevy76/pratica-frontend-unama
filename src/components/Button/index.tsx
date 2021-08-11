@@ -2,11 +2,17 @@ import React, { ButtonHTMLAttributes } from 'react';
 
 import './styles.css';
 
-const Button: React.FC<ButtonHTMLAttributes<HTMLButtonElement>> = ({
-  className,
-  ...props
-}) => {
-  return <button className={`btn ${className}`} {...props} />;
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  error?: boolean;
+}
+
+const Button: React.FC<ButtonProps> = ({ className, error, ...props }) => {
+  return (
+    <button
+      className={`btn ${className} ${error ? 'btn-error' : ''}`}
+      {...props}
+    />
+  );
 };
 
 export default Button;

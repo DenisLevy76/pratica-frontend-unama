@@ -2,14 +2,15 @@ import React, { LabelHTMLAttributes, ReactNode } from 'react';
 
 import './styles.css';
 
-interface LabelInputComponent extends LabelHTMLAttributes<HTMLLabelElement> {
+interface LabelInputComponentProps
+  extends LabelHTMLAttributes<HTMLLabelElement> {
   htmlFor: any;
   label: ReactNode;
   error?: boolean;
   required?: boolean;
 }
 
-const LabelInputComponent: React.FC<LabelInputComponent> = ({
+const LabelInputComponent: React.FC<LabelInputComponentProps> = ({
   htmlFor,
   label,
   error,

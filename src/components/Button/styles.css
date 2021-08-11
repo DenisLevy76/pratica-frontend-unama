@@ -8,14 +8,23 @@
   font-weight: bold;
 
   padding: 1rem;
-
-  cursor: pointer;
 }
 
-.btn:hover {
+.btn-error {
+  border-color: var(--error);
+  color: 1px solid var(--error);
+}
+
+.btn:hover:not(:disabled) {
+  cursor: pointer;
   filter: brightness(0.9);
 }
 
-.btn:active {
+.btn:active:not(:disabled) {
   transform: scale(0.95);
+}
+
+.btn:disabled {
+  opacity: 40%;
+  cursor: not-allowed;
 }

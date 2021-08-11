@@ -6,7 +6,8 @@ export const ptBR = {
     lastName: 'Sobrenome',
     cpf: 'CPF',
     phone: {
-      number: 'Telefone',
+      telephone: 'Telefone',
+      smartphone: 'Celular',
       type: 'Tipo',
     },
     gender: 'Gênero',
@@ -20,7 +21,8 @@ export const ptBR = {
     cpf: '000.000.000-00',
     phone: {
       type: 'Tipo',
-      number: '(00) 00000-0000',
+      telephone: '(00) 0000-0000',
+      smartphone: '(00) 00000-0000',
     },
     birthdate: 'DD/mm/AAAA',
   },

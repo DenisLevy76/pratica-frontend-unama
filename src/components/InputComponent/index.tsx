@@ -5,10 +5,12 @@ import HelperText from '../HelperTextComponent';
 import LabelInputComponent from '../LabelInputComponent';
 import './styles.css';
 
-interface InputProps extends Props {
+export interface InputProps extends Props {
   name: string;
   id: string;
   label: string;
+  className?: string;
+  ref?: any;
   error?: boolean;
   helperText?: ReactNode;
 }
@@ -19,11 +21,13 @@ const Input: React.FC<InputProps> = ({
   id,
   label,
   error,
+  ref,
   helperText,
+  className,
   ...others
 }) => {
   return (
-    <div className="input-container">
+    <div className={`input-container ${className}`}>
       {label ? (
         <LabelInputComponent
           htmlFor={id}
@@ -37,7 +41,8 @@ const Input: React.FC<InputProps> = ({
       <Cleave
         id={id}
         options={options}
-        className={`form-field ${error && 'error'}`}
+        name={name}
+        className={`form-field ${error ? 'error' : ''}`}
         {...others}
       />
       {error && helperText ? <HelperText helperText={helperText} /> : ''}

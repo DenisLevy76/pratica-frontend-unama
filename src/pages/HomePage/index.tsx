@@ -1,4 +1,5 @@
 import React from 'react';
+import DisplayInformations from '../../components/DisplayInformations';
 import SignupForm from '../../components/SignupFormComponent';
 import './styles.css';
 
@@ -9,7 +10,7 @@ const HomePage: React.FC = () => {
         <SignupForm />
       </section>
       <section>
-        <h1>Info</h1>
+        <DisplayInformations />
       </section>
     </main>
   );
