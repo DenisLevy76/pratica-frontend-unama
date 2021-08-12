@@ -10,7 +10,12 @@ export const ptBR = {
       smartphone: 'Celular',
       type: 'Tipo',
     },
-    gender: 'Gênero',
+    gender: {
+      title: 'Gênero',
+      female: 'Feminino',
+      male: 'Masculino',
+      others: 'Outros',
+    },
     birthdate: 'Dada de nascimento',
   },
   placeholders: {
@@ -29,6 +34,35 @@ export const ptBR = {
   UI: {
     btnSubmitText: 'Concluir',
   },
+  errors: {
+    email: {
+      required: 'O email é obrigatório.',
+      invalid: 'Email inválido.',
+      confirm: 'Os emails devem ser iguais.',
+    },
+    name: {
+      fistName: {
+        required: 'O nome é obrigatório.',
+      },
+      lastName: {
+        require: 'O sobrenome é obrigatório.',
+      },
+    },
+    cpf: {
+      required: 'O CPF é obrigatório.',
+      invalid: 'Entre com um cpf válido.',
+    },
+    phone: {
+      required: 'O número para contato é obrigatório.',
+      telephone: 'Entre com um telefone válido.',
+      smartphone: 'Entre com um celular válido.',
+    },
+    date: {
+      required: 'Entre com uma data válida.',
+      minAge: 'Mínimo de 5 anos atrás.',
+      maxAge: 'Máximo de 110 anos atrás.',
+    },
+  },
 };
 
-export type Settings = typeof ptBR;
+export type Language = typeof ptBR;

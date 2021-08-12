@@ -5,10 +5,16 @@ import reportWebVitals from './reportWebVitals';
 import './styles/globalStyle.css';
 import './styles/reset.css';
 import './styles/errorText.css';
+import FormContextProvider from './contexts/FormContext';
+import SettingsContextProvider from './contexts/AllSettingsContext';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <SettingsContextProvider>
+      <FormContextProvider>
+        <App />
+      </FormContextProvider>
+    </SettingsContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

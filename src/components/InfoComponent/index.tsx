@@ -10,8 +10,10 @@ interface InfoComponentProps {
 
 const InfoComponent: React.FC<InfoComponentProps> = ({ id, label, info }) => {
   return (
-    <div>
-      <label htmlFor={id}>{label}</label>
+    <div className="info__container">
+      <label htmlFor={id} className="info__label">
+        {label}
+      </label>
       <p id={id}>{info}</p>
     </div>
   );

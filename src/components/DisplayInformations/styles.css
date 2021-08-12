@@ -1,0 +1,11 @@
+.display-informations__container {
+  display: flex;
+  flex-direction: column;
+
+  gap: 1rem;
+
+  background-color: var(--secondary);
+  padding: 5rem;
+
+  box-shadow: 10px 10px rgba(0, 0, 0, 0.3);
+}

@@ -1,30 +1,33 @@
-import { FocusEventHandler, InputHTMLAttributes, ReactNode } from 'react';
-import useForm from '../../hooks/useForm';
+import Cleave from 'cleave.js/react';
+import { Props } from 'cleave.js/react/props';
+import { ReactNode } from 'react';
 import HelperText from '../HelperTextComponent';
 import LabelInputComponent from '../LabelInputComponent';
 import './styles.css';
 
-export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface MaskInputComponentProps extends Props {
   name: string;
   id: string;
   label: string;
   className?: string;
+  ref?: any;
   error?: boolean;
   helperText?: ReactNode;
 }
 
-const Input: React.FC<InputProps> = ({
+const MaskInputComponent: React.FC<MaskInputComponentProps> = ({
   name,
+  options,
   id,
   label,
   error,
+  ref,
   helperText,
   className,
   ...others
 }) => {
-  const { handleValidationOnBlur } = useForm();
   return (
-    <div className={`input-container ${className}`}>
+    <div className={`masked-input__container ${className}`}>
       {label ? (
         <LabelInputComponent
           htmlFor={id}
@@ -35,10 +38,11 @@ const Input: React.FC<InputProps> = ({
       ) : (
         ''
       )}
-      <input
+      <Cleave
         id={id}
+        options={options}
         name={name}
-        className={`form-field ${error ? 'error' : ''}`}
+        className={`masked-input__field ${error ? 'error' : ''}`}
         {...others}
       />
       {error && helperText ? <HelperText helperText={helperText} /> : ''}
@@ -46,4 +50,4 @@ const Input: React.FC<InputProps> = ({
   );
 };
 
-export default Input;
+export default MaskInputComponent;

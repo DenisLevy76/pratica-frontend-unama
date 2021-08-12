@@ -1,0 +1,29 @@
+.masked-input__container {
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.3rem;
+  width: 100%;
+}
+
+.masked-input__field {
+  border: 1px solid var(--secondary);
+  border-radius: 8px;
+
+  background-color: transparent;
+
+  width: 100%;
+  padding: 0.875rem;
+
+  font-size: 1rem;
+
+  color: var(--text);
+}
+
+.error {
+  border-color: var(--error);
+}
+
+.display-none {
+  display: none;
+}
