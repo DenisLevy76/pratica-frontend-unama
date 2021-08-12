@@ -1,6 +1,5 @@
 import { ChangeEvent } from 'react';
 import InputComponent from '../InputComponent';
-import { ptBR, Settings } from '../../settings/ptBR';
 import SelectComponent from '../SelectComponent';
 import { maskApply, MaskTypes } from '../../utils/maskApply';
 import RadioGroup from '../RadioGroup';
@@ -9,17 +8,19 @@ import Button from '../Button';
 import './styles.css';
 import useForm from '../../hooks/useForm';
 import MaskInputComponent from '../MaskInputComponent';
-
-let language: Settings = ptBR;
+import { useSettingsContext } from '../../hooks/useSettingsContext';
 
 export default function SignupForm() {
   const {
     formData,
     formErros,
     handleInputOnChange,
+    handleValidationOnBlur,
     handleSubmit,
     setFormData,
   } = useForm();
+
+  const { language } = useSettingsContext();
 
   function handleSetPhoneTypeSelection(
     event: ChangeEvent<HTMLSelectElement>
@@ -46,6 +47,7 @@ export default function SignupForm() {
         error={!!formErros.email}
         helperText={formErros.email}
         label={language.labels.email}
+        onBlur={handleValidationOnBlur}
         placeholder={language.placeholders.email}
       />
       <InputComponent
@@ -57,17 +59,20 @@ export default function SignupForm() {
         helperText={formErros.emailConfirm}
         onChange={handleInputOnChange}
         label={language.labels.emailConfirm}
+        onBlur={handleValidationOnBlur}
         placeholder={language.placeholders.emailConfirm}
       />
+
       <InputComponent
         id="firstName"
         type="text"
         name="firstName"
-        value={formData.fistName}
-        error={!!formErros.fistName}
-        helperText={formErros.fistName}
+        value={formData.firstName}
+        error={!!formErros.firstName}
+        helperText={formErros.firstName}
         onChange={handleInputOnChange}
         label={language.labels.firstName}
+        onBlur={handleValidationOnBlur}
         placeholder={language.placeholders.firstName}
       />
       <InputComponent
@@ -79,6 +84,7 @@ export default function SignupForm() {
         helperText={formErros.lastName}
         onChange={handleInputOnChange}
         label={language.labels.lastName}
+        onBlur={handleValidationOnBlur}
         placeholder={language.placeholders.lastName}
       />
       <MaskInputComponent
@@ -90,6 +96,7 @@ export default function SignupForm() {
         helperText={formErros.cpf}
         onChange={handleInputOnChange}
         label={language.labels.cpf}
+        onBlur={handleValidationOnBlur}
         placeholder={language.placeholders.cpf}
         options={maskApply(MaskTypes.cpf)}
       />
@@ -108,8 +115,11 @@ export default function SignupForm() {
         <MaskInputComponent
           id="smartphoneNumber"
           type="text"
-          name="phoneNumber"
+          name="phone"
           value={formData.phone.number}
+          error={!!formErros.number}
+          helperText={formErros.number}
+          onBlur={handleValidationOnBlur}
           onChange={(e) =>
             setFormData({
               ...formData,
@@ -124,8 +134,11 @@ export default function SignupForm() {
         <MaskInputComponent
           id="phoneNumber"
           type="text"
-          name="phoneNumber2"
+          name="phone"
           value={formData.phone.number}
+          error={!!formErros.number}
+          onBlur={handleValidationOnBlur}
+          helperText={formErros.number}
           onChange={(e) =>
             setFormData({
               ...formData,
@@ -139,10 +152,10 @@ export default function SignupForm() {
         />
       </fieldset>
       <fieldset className="gender-birthdate__container">
-        <RadioGroup label={language.labels.gender}>
+        <RadioGroup label={language.labels.gender.title}>
           <RadioInputComponent
             id="genderFelame"
-            label="Feminino"
+            label={language.labels.gender.female}
             name="gender"
             value="f"
             onChange={handleInputOnChange}
@@ -150,14 +163,14 @@ export default function SignupForm() {
           />
           <RadioInputComponent
             id="genderMale"
-            label="Masculino"
+            label={language.labels.gender.male}
             name="gender"
             value="m"
             onChange={handleInputOnChange}
           />
           <RadioInputComponent
             id="genderOthers"
-            label="Outros"
+            label={language.labels.gender.others}
             name="gender"
             value="o"
             onChange={handleInputOnChange}
@@ -170,6 +183,7 @@ export default function SignupForm() {
           value={formData.birthdate}
           error={!!formErros.birthdate}
           helperText={formErros.birthdate}
+          onBlur={handleValidationOnBlur}
           onChange={handleInputOnChange}
           label={language.labels.birthdate}
           placeholder={language.placeholders.birthdate}

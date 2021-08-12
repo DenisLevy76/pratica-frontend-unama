@@ -1,5 +1,4 @@
 import moment from 'moment';
-import { FieldErros, InitialState } from '../hooks/useForm';
 
 function isEmail(email: string): boolean {
   const re =
@@ -84,6 +83,18 @@ export function cpfValidator(strCPF: string): string {
   return '';
 }
 
+export function contactNumberValidator(number: string, type: string): string {
+  if (!number) return 'O número para contato é obrigatório.';
+  const stripedNumber = strip(number);
+
+  if (stripedNumber.length !== 10 && type === 'telephone')
+    return 'Entre com um telefone válido.';
+  if (stripedNumber.length !== 11 && type === 'smartphone')
+    return 'Entre com um celular válido.';
+
+  return '';
+}
+
 export function dateValidation(date: string): string {
   if (!date || date.length !== 10) return 'Entre com uma data válida.';
 
@@ -96,32 +107,7 @@ export function dateValidation(date: string): string {
   const userAge = now.diff(newDate, 'years');
 
   if (userAge < minAge) return 'Mínimo de 5 anos atrás.';
-  if (userAge > maxAge) return 'Máximo de 5 anos atrás.';
+  if (userAge > maxAge) return 'Máximo de 110 anos atrás.';
 
   return '';
-}
-
-export function validator(state: InitialState): FieldErros {
-  const erros: FieldErros = {
-    email: '',
-    emailConfirm: '',
-    fistName: '',
-    lastName: '',
-    cpf: '',
-    phone: {
-      number: '',
-    },
-    birthdate: '',
-  };
-
-  erros.email = emailValidator(state.email);
-  erros.emailConfirm =
-    emailValidator(state.emailConfirm) ||
-    emailComparation(state.email, state.emailConfirm);
-  erros.fistName = fistNameValidator(state.fistName);
-  erros.lastName = fistNameValidator(state.lastName);
-  erros.cpf = cpfValidator(state.cpf);
-  erros.birthdate = dateValidation(state.birthdate);
-
-  return erros;
 }

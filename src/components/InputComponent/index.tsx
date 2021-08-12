@@ -1,4 +1,5 @@
-import { InputHTMLAttributes, ReactNode } from 'react';
+import { FocusEventHandler, InputHTMLAttributes, ReactNode } from 'react';
+import useForm from '../../hooks/useForm';
 import HelperText from '../HelperTextComponent';
 import LabelInputComponent from '../LabelInputComponent';
 import './styles.css';
@@ -21,6 +22,7 @@ const Input: React.FC<InputProps> = ({
   className,
   ...others
 }) => {
+  const { handleValidationOnBlur } = useForm();
   return (
     <div className={`input-container ${className}`}>
       {label ? (
