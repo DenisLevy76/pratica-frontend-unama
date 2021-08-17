@@ -1,11 +1,5 @@
 import { CleaveOptions } from 'cleave.js/options';
-
-export enum MaskTypes {
-  phoneNumber = 'PHONE_NUMBER',
-  smartphoneNumber = 'SMARTPHONE_NUMBER',
-  cpf = 'CPF',
-  date = 'DATE',
-}
+import { MaskTypes } from '../types/enums/MaskTypes';
 
 export function maskApply(mask: MaskTypes): CleaveOptions {
   switch (mask) {

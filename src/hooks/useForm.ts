@@ -1,15 +1,8 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { initialState, InitialState } from '../contexts/FormContext';
-import {
-  emailValidator,
-  cpfValidator,
-  dateValidation,
-  emailComparation,
-  fistNameValidator,
-  contactNumberValidator,
-  lastNameValidator,
-} from '../utils/validatorsUtils';
+import { Fields } from '../types/enums/Fields';
 import { useFormContext } from './useFormContext';
+import { useValidations } from './useValidations';
 
 const initialErros = {
   email: '',
@@ -42,45 +35,49 @@ export default function useForm(): useFormData {
   const [formData, setFormData] = useState<InitialState>(initialFormData);
   const [formErros, setFormErros] = useState<FieldErros>(initialErros);
   const { updateState } = useFormContext();
+  const {
+    emailValidator,
+    cpfValidator,
+    dateValidation,
+    emailComparation,
+    fistNameValidator,
+    contactNumberValidator,
+    lastNameValidator,
+  } = useValidations();
 
-  function validateOneField(field: string) {
-    switch (field) {
-      case 'email':
-        return { email: emailValidator(formData.email) };
-      case 'emailConfirm':
-        return {
-          emailConfirm:
-            emailValidator(formData.emailConfirm) ||
-            emailComparation(formData.email, formData.emailConfirm),
-        };
-      case 'firstName':
-        return {
-          firstName: fistNameValidator(formData.firstName),
-        };
-      case 'lastName':
-        return {
-          lastName: lastNameValidator(formData.lastName),
-        };
-      case 'cpf':
-        return { cpf: cpfValidator(formData.cpf) };
-      case 'phone':
-        return {
-          number: contactNumberValidator(
-            formData.phone.number,
-            formData.phone.type
-          ),
-        };
-      case 'birthdate':
-        return {
-          birthdate: dateValidation(formData.birthdate),
-        };
-    }
+  function validateOneField(field: Fields) {
+    const validations = {
+      email: { email: emailValidator(formData.email) },
+      emailConfirm: {
+        emailConfirm:
+          emailValidator(formData.emailConfirm) ||
+          emailComparation(formData.email, formData.emailConfirm),
+      },
+      firstName: {
+        firstName: fistNameValidator(formData.firstName),
+      },
+      lastName: {
+        lastName: lastNameValidator(formData.lastName),
+      },
+      cpf: { cpf: cpfValidator(formData.cpf) },
+      phone: {
+        number: contactNumberValidator(
+          formData.phone.number,
+          formData.phone.type
+        ),
+      },
+      birthdate: {
+        birthdate: dateValidation(formData.birthdate),
+      },
+    };
+
+    return validations[field];
   }
 
   function validateAllFields(): FieldErros {
     let errors: FieldErros = {} as FieldErros;
     for (let key in formData) {
-      const error = validateOneField(key);
+      const error = validateOneField(key as Fields);
       errors = { ...errors, ...error };
     }
 

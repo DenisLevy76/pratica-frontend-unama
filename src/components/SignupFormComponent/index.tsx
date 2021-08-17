@@ -1,7 +1,7 @@
 import { ChangeEvent } from 'react';
 import InputComponent from '../InputComponent';
 import SelectComponent from '../SelectComponent';
-import { maskApply, MaskTypes } from '../../utils/maskApply';
+import { maskApply } from '../../utils/maskApply';
 import RadioGroup from '../RadioGroup';
 import RadioInputComponent from '../RadioInputComponent';
 import Button from '../Button';
@@ -9,6 +9,9 @@ import './styles.css';
 import useForm from '../../hooks/useForm';
 import MaskInputComponent from '../MaskInputComponent';
 import { useSettingsContext } from '../../hooks/useSettingsContext';
+import { PhoneType } from '../../types/enums/PhoneTypes';
+import { Genders } from '../../types/enums/Genders';
+import { MaskTypes } from '../../types/enums/MaskTypes';
 
 export default function SignupForm() {
   const {
@@ -108,8 +111,8 @@ export default function SignupForm() {
           label={language.labels.phone.type}
           onChange={handleSetPhoneTypeSelection}
           options={[
-            { id: 1, value: 'smartphone', children: 'Celular' },
-            { id: 2, value: 'telephone', children: 'Fixo' },
+            { id: 1, value: PhoneType.smartphone, children: 'Celular' },
+            { id: 2, value: PhoneType.telephone, children: 'Fixo' },
           ]}
         />
         <MaskInputComponent
@@ -157,7 +160,7 @@ export default function SignupForm() {
             id="genderFelame"
             label={language.labels.gender.female}
             name="gender"
-            value="f"
+            value={Genders.female}
             onChange={handleInputOnChange}
             defaultChecked
           />
@@ -165,14 +168,14 @@ export default function SignupForm() {
             id="genderMale"
             label={language.labels.gender.male}
             name="gender"
-            value="m"
+            value={Genders.male}
             onChange={handleInputOnChange}
           />
           <RadioInputComponent
             id="genderOthers"
             label={language.labels.gender.others}
             name="gender"
-            value="o"
+            value={Genders.others}
             onChange={handleInputOnChange}
           />
         </RadioGroup>

@@ -1,6 +1,8 @@
 import React from 'react';
 import { useFormContext } from '../../hooks/useFormContext';
 import { useSettingsContext } from '../../hooks/useSettingsContext';
+import { Genders } from '../../types/enums/Genders';
+import { PhoneType } from '../../types/enums/PhoneTypes';
 import InfoComponent from '../InfoComponent';
 
 import './styles.css';
@@ -11,35 +13,30 @@ const DisplayInformations: React.FC = () => {
 
   function displayFullName(firstName: string, lastName: string) {
     if (firstName && lastName) {
-      return firstName + ' ' + lastName;
-    } else {
-      return '';
+      return `${firstName} ${lastName}`;
     }
+
+    return '';
   }
 
-  function displayGender(gender: string) {
-    switch (gender) {
-      case 'f':
-        return language.labels.gender.female;
-      case 'm':
-        return language.labels.gender.male;
-      case 'o':
-        return language.labels.gender.others;
-      default:
-        return '';
-    }
-  }
+  const displayGender = (gender: Genders) => {
+    const genders = {
+      f: language.labels.gender.female,
+      m: language.labels.gender.male,
+      o: language.labels.gender.others,
+    };
 
-  function displayPhone(phone: string) {
-    switch (phone) {
-      case 'telephone':
-        return language.labels.phone.telephone;
-      case 'smartphone':
-        return language.labels.phone.smartphone;
-      default:
-        return language.labels.phone.type;
-    }
-  }
+    return genders[gender] || '';
+  };
+
+  const displayPhone = (phone: PhoneType) => {
+    const types = {
+      telephone: language.labels.phone.telephone,
+      smartphone: language.labels.phone.smartphone,
+    };
+
+    return types[phone] || language.labels.phone.type;
+  };
 
   return (
     <section className="display-informations__container">
@@ -60,7 +57,7 @@ const DisplayInformations: React.FC = () => {
       />
       <InfoComponent
         id="phone-info"
-        label={`Telefone - ${displayPhone(state.phone.type)}`}
+        label={`Telefone - ${displayPhone(state.phone.type as PhoneType)}`}
         info={state.phone.number}
       />
       <InfoComponent
@@ -71,7 +68,7 @@ const DisplayInformations: React.FC = () => {
       <InfoComponent
         id="gender-info"
         label={language.labels.gender.title}
-        info={displayGender(state.gender)}
+        info={displayGender(state.gender as Genders)}
       />
     </section>
   );
