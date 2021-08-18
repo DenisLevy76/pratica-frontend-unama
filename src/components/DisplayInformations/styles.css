@@ -9,3 +9,9 @@
 
   box-shadow: 10px 10px rgba(0, 0, 0, 0.3);
 }
+
+@media (max-width: 768px) {
+  .display-informations__container {
+    box-shadow: none;
+  }
+}

@@ -45,7 +45,11 @@ const MaskInputComponent: React.FC<MaskInputComponentProps> = ({
         className={`masked-input__field ${error ? 'error' : ''}`}
         {...others}
       />
-      {error && helperText ? <HelperText helperText={helperText} /> : ''}
+      {error && helperText ? (
+        <HelperText helperText={helperText} />
+      ) : (
+        <div className="placeholder"></div>
+      )}
     </div>
   );
 };

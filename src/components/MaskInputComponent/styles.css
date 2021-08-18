@@ -11,6 +11,7 @@
   border-radius: 8px;
 
   background-color: transparent;
+  min-width: 17.625rem;
 
   width: 100%;
   padding: 0.875rem;
@@ -26,4 +27,14 @@
 
 .display-none {
   display: none;
+}
+
+.placeholder {
+  height: 1rem;
+}
+
+@media (max-width: 768px) {
+  .masked-input__field {
+    min-width: 100%;
+  }
 }
