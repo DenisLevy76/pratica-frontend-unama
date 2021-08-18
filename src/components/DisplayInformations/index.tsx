@@ -11,13 +11,13 @@ const DisplayInformations: React.FC = () => {
   const { state } = useFormContext();
   const { language } = useSettingsContext();
 
-  function displayFullName(firstName: string, lastName: string) {
+  const displayFullName = (firstName: string, lastName: string) => {
     if (firstName && lastName) {
       return `${firstName} ${lastName}`;
     }
 
     return '';
-  }
+  };
 
   const displayGender = (gender: Genders) => {
     const genders = {

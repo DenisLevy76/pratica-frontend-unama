@@ -1,6 +1,7 @@
 import { InputHTMLAttributes, ReactNode } from 'react';
 import HelperText from '../HelperTextComponent';
 import LabelInputComponent from '../LabelInputComponent';
+
 import './styles.css';
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -39,7 +40,11 @@ const Input: React.FC<InputProps> = ({
         className={`form-field ${error ? 'error' : ''}`}
         {...others}
       />
-      {error && helperText ? <HelperText helperText={helperText} /> : ''}
+      {error && helperText ? (
+        <HelperText helperText={helperText} />
+      ) : (
+        <div className="placeholder"></div>
+      )}
     </div>
   );
 };

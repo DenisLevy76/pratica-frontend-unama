@@ -11,7 +11,7 @@ const HomePage: React.FC = () => {
       <section>
         <SignupForm />
       </section>
-      <section>{state.birthdate && <DisplayInformations />}</section>
+      {state.birthdate && <DisplayInformations />}
     </main>
   );
 };
